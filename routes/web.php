@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\DB;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,8 +23,8 @@ Route::get('/', function () {
 Route::get('/db-test', function () {
     try {
         DB::connection()->getPdo();
-        return "DB Connection is successful!";
+        return response()->json(['message' => 'DB Connection is successful!']);
     } catch (\Exception $e) {
-        return "Failed to connect to DB: " . $e->getMessage();
+        return response()->json(['error' => 'Failed to connect to DB: ' . $e->getMessage()], 500);
     }
 });
