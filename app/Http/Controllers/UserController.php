@@ -75,4 +75,26 @@ class UserController extends Controller
             ]
         ], 200);
     }
+
+    public function getUserByEmail(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|string|email',
+        ]);
+
+        $user = User::where('email', $request->email)->first();
+
+        if (!$user) {
+            return response()->json([
+                'status' => 'Error',
+                'message' => 'User not found'
+            ], 404);
+        }
+
+        return response()->json([
+            'status' => 'Success',
+            'message' => 'User retrieved successfully',
+            'data' => $user
+        ], 200);
+    }
 }
