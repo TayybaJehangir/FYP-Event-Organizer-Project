@@ -32,4 +32,14 @@ class BusinessController extends Controller
             'data' => $business
         ], 201);
     }
+
+    public function getVendorBusinesses($vendor_id)
+    {
+        $businesses = Business::where('vendor_id', $vendor_id)->get();
+
+        return response()->json([
+            'status' => 'Success',
+            'data' => $businesses
+        ], 200);
+    }
 }
