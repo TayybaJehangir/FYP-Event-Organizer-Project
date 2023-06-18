@@ -18,6 +18,7 @@ class Quotation extends Model
         'user_name',
         'user_contact_number',
         'vendor_id',
-        'user_id'
+        'user_id',
+        'business_id'
     ];
 }
