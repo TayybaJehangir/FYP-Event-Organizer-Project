@@ -50,4 +50,29 @@ class BusinessController extends Controller
             'data' => $business
         ], 200);
     }
+
+    public function update(Request $request, Business $business)
+    {
+        $request->validate([
+            'business_name' => 'required',
+            'business_type' => 'required',
+            'business_mobile_number' => 'required',
+            'business_address' => 'required',
+            'business_details' => 'required',
+            'people_capacity_min' => 'required|integer',
+            'people_capacity_max' => 'required|integer',
+            'start_time' => 'required',
+            'end_time' => 'required',
+            'price_per_person' => 'required|numeric',
+            'services_and_amenities' => 'required',
+        ]);
+
+        $business->update($request->all());
+
+        return response()->json([
+            'status' => 'Success',
+            'message' => 'Business updated successfully',
+            'data' => $business
+        ], 200);
+    }
 }

@@ -28,6 +28,8 @@ Route::get('/vendor/{vendor_id}/businesses', [BusinessController::class, 'getVen
 
 Route::get('/business/{business}', [BusinessController::class, 'show']);
 
+Route::put('/business/{business}', [BusinessController::class, 'update']);
+
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
