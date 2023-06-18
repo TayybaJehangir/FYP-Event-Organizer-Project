@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\BusinessController;
+use App\Http\Controllers\QuotationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,6 +32,8 @@ Route::get('/business/{business}', [BusinessController::class, 'show']);
 Route::put('/business/{business}', [BusinessController::class, 'update']);
 
 Route::get('/business/search/{location}', [BusinessController::class, 'searchByLocation']);
+
+Route::post('/quotations', [QuotationController::class, 'store']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
