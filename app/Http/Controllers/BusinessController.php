@@ -42,4 +42,12 @@ class BusinessController extends Controller
             'data' => $businesses
         ], 200);
     }
+
+    public function show(Business $business)
+    {
+        return response()->json([
+            'status' => 'Success',
+            'data' => $business
+        ], 200);
+    }
 }
