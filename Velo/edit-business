@@ -1,0 +1,53 @@
+import { showBusinessById, getUserByEmail, updateBusiness } from 'backend/laravel-api.jsw';
+import wixLocation from 'wix-location';
+
+let query = wixLocation.query;
+
+$w.onReady(async function () {
+    var businessResult = await showBusinessById(query.bid);
+
+    if (businessResult.status == "Success") {
+        $w('#businessName').value = businessResult.data?.business_name.length ? businessResult.data.business_name : "-";
+        $w('#businessType').value = businessResult.data?.business_type.length ? businessResult.data.business_type : "-";
+        $w('#businessAddress').value = businessResult.data?.business_address.length ? { "formatted": businessResult.data.business_address } : { "formatted":""};
+        // $w('#pricePerPerson').text = businessResult.data?.price_per_person.length ? businessResult.data.price_per_person : "-";
+        $w('#businessNumber').value = businessResult.data?.business_mobile_number.length ? businessResult.data.business_mobile_number : "-";
+        $w('#businessAbout').value = businessResult.data?.business_details.length ? businessResult.data.business_details : "-";
+        $w('#capacityMin').value = businessResult.data?.people_capacity_min ? businessResult.data.people_capacity_min : "-";
+        $w('#capacityMax').value = businessResult.data?.people_capacity_max ? businessResult.data.people_capacity_max : "-";
+        $w('#startTime').value = businessResult.data?.start_time.length ? businessResult.data.start_time : "-";
+        $w('#endTime').value = businessResult.data?.end_time.length ? businessResult.data.end_time : "-";
+        $w('#pricePerPerson').value = businessResult.data?.price_per_person.length ? businessResult.data.price_per_person : "-";
+
+
+        if (businessResult.data?.services_and_amenities.length) {
+            var servicesString = businessResult.data.services_and_amenities;
+            const servicesArray = servicesString.split(", ");
+            $w('#services').value = servicesArray;
+        }
+    }
+
+});
+
+export async function updateBtn_click(event) {
+	let selectedValues = $w("#services").value;
+    let selectedValuesString = selectedValues.join(", ");
+
+    var payload = {
+        "business_name": $w('#businessName').value,
+        "business_type": $w('#businessType').value,
+        "business_mobile_number": $w('#businessNumber').value,
+        "business_address": $w('#businessAddress').value.formatted,
+        "business_details": $w('#businessAbout').value,
+        "people_capacity_min": $w('#capacityMin').value,
+        "people_capacity_max": $w('#capacityMax').value,
+        "start_time": $w('#startTime').value,
+        "end_time": $w('#endTime').value,
+        "price_per_person": $w('#pricePerPerson').value,
+        "services_and_amenities": selectedValuesString,
+    };
+    console.log("PAYLOAD: ", payload);
+	
+    let response = await updateBusiness(query.bid, payload);
+	console.log("Updated Business Response: ", response);
+}
