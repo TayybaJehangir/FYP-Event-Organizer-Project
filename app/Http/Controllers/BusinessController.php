@@ -75,4 +75,14 @@ class BusinessController extends Controller
             'data' => $business
         ], 200);
     }
+
+    public function searchByLocation($location)
+    {
+        $businesses = Business::where('business_address', 'like', '%' . $location . '%')->get();
+
+        return response()->json([
+            'status' => 'Success',
+            'data' => $businesses
+        ], 200);
+    }
 }

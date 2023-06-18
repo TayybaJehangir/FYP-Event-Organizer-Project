@@ -30,6 +30,8 @@ Route::get('/business/{business}', [BusinessController::class, 'show']);
 
 Route::put('/business/{business}', [BusinessController::class, 'update']);
 
+Route::get('/business/search/{location}', [BusinessController::class, 'searchByLocation']);
+
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
