@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Quotation;
 
 use Illuminate\Http\Request;
@@ -30,14 +31,24 @@ class QuotationController extends Controller
         $businessId = $request->business_id;
 
         $quotations = Quotation::where('user_id', $userId)
-                        ->where('business_id', $businessId)
-                        ->get();
+            ->where('business_id', $businessId)
+            ->get();
 
         $count = $quotations->count();
 
         return response()->json([
             'status' => $count > 0,
             'count' => $count
+        ]);
+    }
+
+    public function getVendorQuotations(Request $request, $vendor_id)
+    {
+        $quotations = Quotation::where('vendor_id', $vendor_id)->get();
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $quotations
         ]);
     }
 }

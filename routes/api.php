@@ -37,6 +37,8 @@ Route::post('/quotations', [QuotationController::class, 'store']);
 
 Route::get('/quotations/check', [QuotationController::class, 'checkUserQuotation']);
 
+Route::get('/quotations/vendor/{vendor_id}', [QuotationController::class, 'getVendorQuotations']);
+
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
