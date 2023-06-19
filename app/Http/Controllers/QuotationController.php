@@ -48,6 +48,7 @@ class QuotationController extends Controller
 
         $quotations = $quotations->map(function ($quotation) {
             $quotation->cover_photo = $quotation->business->cover_photo;
+            $quotation->business_name = $quotation->business->business_name;
             unset($quotation->business);
             return $quotation;
         });
