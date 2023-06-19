@@ -17,4 +17,27 @@ class QuotationController extends Controller
             'data' => $quotation
         ], 201);
     }
+
+    public function checkUserQuotation(Request $request)
+    {
+        // Validate the incoming request
+        $validated = $request->validate([
+            'user_id' => 'required',
+            'business_id' => 'required',
+        ]);
+
+        $userId = $request->user_id;
+        $businessId = $request->business_id;
+
+        $quotations = Quotation::where('user_id', $userId)
+                        ->where('business_id', $businessId)
+                        ->get();
+
+        $count = $quotations->count();
+
+        return response()->json([
+            'status' => $count > 0,
+            'count' => $count
+        ]);
+    }
 }
