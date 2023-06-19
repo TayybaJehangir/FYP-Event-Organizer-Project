@@ -21,4 +21,9 @@ class Quotation extends Model
         'user_id',
         'business_id'
     ];
+
+    public function business()
+    {
+        return $this->belongsTo(Business::class);
+    }
 }

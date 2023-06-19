@@ -44,7 +44,13 @@ class QuotationController extends Controller
 
     public function getVendorQuotations(Request $request, $vendor_id)
     {
-        $quotations = Quotation::where('vendor_id', $vendor_id)->get();
+        $quotations = Quotation::where('vendor_id', $vendor_id)->with('business')->get();
+
+        $quotations = $quotations->map(function ($quotation) {
+            $quotation->cover_photo = $quotation->business->cover_photo;
+            unset($quotation->business);
+            return $quotation;
+        });
 
         return response()->json([
             'status' => 'success',
