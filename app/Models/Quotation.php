@@ -19,7 +19,8 @@ class Quotation extends Model
         'user_contact_number',
         'vendor_id',
         'user_id',
-        'business_id'
+        'business_id',
+        'status'
     ];
 
     public function business()
