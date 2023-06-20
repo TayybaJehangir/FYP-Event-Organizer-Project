@@ -19,16 +19,22 @@ class UserController extends Controller
             'password' => 'required|string|min:5',
             'phone' => 'required|string|min:10',
             'role' => 'required|integer',
+            'profile_image' => 'nullable|string',
+            'address' => 'nullable|string|max:255',
+            'area' => 'nullable|string|max:255'
         ]);
 
-        $user = User::create([
-            'first_name' => $request->first_name,
-            'last_name' => $request->last_name,
-            'email' => $request->email,
-            'password' => $request->password,
-            'phone' => $request->phone,
-            'role' => $request->role,
-        ]);
+        $user = new User;
+        $user->first_name = $request->input('first_name');
+        $user->last_name = $request->input('last_name');
+        $user->email = $request->input('email');
+        $user->password = $request->input('password');
+        $user->phone = $request->input('phone');
+        $user->role = $request->input('role');
+        $user->profile_image = $request->input('profile_image');
+        $user->address = $request->input('address');
+        $user->area = $request->input('area');
+        $user->save();
 
         return response()->json([
             'status' => 'Success',
@@ -44,7 +50,7 @@ class UserController extends Controller
             'password' => 'required|string',
         ]);
 
-        
+
         // $credentials = request(['email', 'password']);
 
         // if (!Auth::attempt($credentials)) {
