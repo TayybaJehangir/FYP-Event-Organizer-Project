@@ -95,4 +95,16 @@ class QuotationController extends Controller
             'data' => $quotation,
         ], 200);
     }
+
+    public function updateQuotationStatus(Request $request, $id)
+    {
+        $quotation = Quotation::findOrFail($id);
+        $quotation->status = $request->input('status');
+        $quotation->save();
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $quotation
+        ]);
+    }
 }
