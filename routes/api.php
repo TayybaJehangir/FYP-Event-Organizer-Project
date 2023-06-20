@@ -40,6 +40,8 @@ Route::get('/quotations/check', [QuotationController::class, 'checkUserQuotation
 
 Route::get('/quotations/vendor/{vendor_id}', [QuotationController::class, 'getVendorQuotations']);
 
+Route::get('/quotations/user/{user_id}', [QuotationController::class, 'getUserQuotations']);
+
 Route::post('/quotation-response', [QuotationResponseController::class, 'store']);
 
 Route::get('/quotation/{id}', [QuotationController::class, 'show']);
