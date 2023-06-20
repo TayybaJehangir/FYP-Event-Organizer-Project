@@ -61,7 +61,7 @@ class QuotationController extends Controller
 
     public function show($id)
     {
-        $quotation = Quotation::with('business')->find($id);
+        $quotation = Quotation::with(['business', 'quotationResponse'])->find($id);
 
         if (!$quotation) {
             return response()->json([

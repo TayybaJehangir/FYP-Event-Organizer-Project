@@ -26,4 +26,9 @@ class Quotation extends Model
     {
         return $this->belongsTo(Business::class);
     }
+
+    public function quotationResponse()
+    {
+        return $this->hasOne(QuotationResponse::class);
+    }
 }
