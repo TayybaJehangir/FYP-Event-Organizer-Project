@@ -46,6 +46,8 @@ Route::post('/quotation-response', [QuotationResponseController::class, 'store']
 
 Route::get('/quotation/{id}', [QuotationController::class, 'show']);
 
+Route::post('/quotations/{id}/status', [QuotationController::class, 'updateStatus']);
+
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });

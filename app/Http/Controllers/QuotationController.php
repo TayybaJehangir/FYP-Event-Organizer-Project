@@ -107,4 +107,21 @@ class QuotationController extends Controller
             'data' => $quotation
         ]);
     }
+
+    public function updateStatus(Request $request, $id)
+    {
+        $request->validate([
+            'status' => 'required|in:Pending,Resolved,Not Satisfied',
+        ]);
+
+        $quotation = Quotation::findOrFail($id);
+        $quotation->status = $request->status;
+        $quotation->save();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Quotation status updated successfully',
+            'data' => $quotation,
+        ], 200);
+    }
 }
