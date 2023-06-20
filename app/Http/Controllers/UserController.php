@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-
+use App\Models\Quotation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -107,6 +107,14 @@ class UserController extends Controller
     public function getManagers()
     {
         $managers = User::where('role', 4)->get();
+
+        $managers->transform(function ($manager) {
+            $manager->quotations_count = Quotation::whereHas('business', function ($query) use ($manager) {
+                $query->where('business_address', 'like', '%' . $manager->area . '%');
+            })->count();
+
+            return $manager;
+        });
 
         return response()->json([
             'status' => 'success',
