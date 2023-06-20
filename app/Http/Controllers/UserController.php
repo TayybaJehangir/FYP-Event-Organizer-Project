@@ -121,4 +121,38 @@ class UserController extends Controller
             'data' => $managers
         ]);
     }
+
+    public function update(Request $request, $id)
+    {
+        $user = User::find($id);
+
+        if (!$user) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'User not found'
+            ], 404);
+        }
+
+        $rules = [
+            'first_name' => 'required|string',
+            'last_name' => 'required|string',
+            'email' => 'required|email|unique:users,email,' . $user->id,
+            'password' => 'required|string',
+            'phone' => 'required|string',
+            'role' => 'required|integer',
+            'profile_image' => 'nullable|string',
+            'address' => 'nullable|string',
+            'area' => 'nullable|string'
+        ];
+
+        $validatedData = $request->validate($rules);
+
+        $user->update($validatedData);
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'User updated successfully',
+            'data' => $user
+        ]);
+    }
 }
