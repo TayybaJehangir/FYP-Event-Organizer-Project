@@ -103,4 +103,14 @@ class UserController extends Controller
             'data' => $user
         ], 200);
     }
+
+    public function getManagers()
+    {
+        $managers = User::where('role', 4)->get();
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $managers
+        ]);
+    }
 }

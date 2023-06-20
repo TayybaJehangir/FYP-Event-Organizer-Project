@@ -51,6 +51,8 @@ Route::post('/quotations/{id}/status', [QuotationController::class, 'updateStatu
 
 Route::get('/stats', [StatsController::class, 'getStats']);
 
+Route::get('/managers', [UserController::class, 'getManagers']);
+
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
