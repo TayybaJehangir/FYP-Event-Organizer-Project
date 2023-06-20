@@ -58,4 +58,21 @@ class QuotationController extends Controller
             'data' => $quotations
         ]);
     }
+
+    public function show($id)
+    {
+        $quotation = Quotation::with('business')->find($id);
+
+        if (!$quotation) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Quotation not found',
+            ], 404);
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $quotation,
+        ], 200);
+    }
 }
