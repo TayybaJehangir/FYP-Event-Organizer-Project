@@ -7,6 +7,7 @@ use App\Http\Controllers\BusinessController;
 use App\Http\Controllers\QuotationController;
 use App\Http\Controllers\QuotationResponseController;
 use App\Http\Controllers\StatsController;
+use App\Http\Controllers\ProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -52,6 +53,9 @@ Route::post('/quotations/{id}/status', [QuotationController::class, 'updateStatu
 Route::get('/stats', [StatsController::class, 'getStats']);
 
 Route::get('/managers', [UserController::class, 'getManagers']);
+
+// Route::get('myplugin/v1/get_product_ids_by_color', 'ProductController@getProductIdsByColor');
+Route::get('myplugin/v1/get_product_ids_by_color', [ProductController::class, 'getProductIdsByColor']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
