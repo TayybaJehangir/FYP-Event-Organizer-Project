@@ -28,6 +28,8 @@ Route::post('/user', [UserController::class, 'getUserByEmail']);
 
 Route::post('/business', [BusinessController::class, 'store']);
 
+Route::get('/business/all', [BusinessController::class, 'getAllBusinesses']);
+
 Route::get('/vendor/{vendor_id}/businesses', [BusinessController::class, 'getVendorBusinesses']);
 
 Route::get('/business/{business}', [BusinessController::class, 'show']);
@@ -41,6 +43,8 @@ Route::post('/quotations', [QuotationController::class, 'store']);
 Route::get('/quotations/check', [QuotationController::class, 'checkUserQuotation']);
 
 Route::get('/quotations/vendor/{vendor_id}', [QuotationController::class, 'getVendorQuotations']);
+
+// Route::get('/quotations/user/{user_id}/business/{business_id}', [QuotationController::class, 'getUserQuotationsByBusiness']);
 
 Route::get('/quotations/user/{user_id}', [QuotationController::class, 'getUserQuotations']);
 
@@ -56,6 +60,8 @@ Route::get('/managers', [UserController::class, 'getManagers']);
 
 // Route::get('myplugin/v1/get_product_ids_by_color', 'ProductController@getProductIdsByColor');
 Route::get('myplugin/v1/get_product_ids_by_color', [ProductController::class, 'getProductIdsByColor']);
+
+Route::get('/user/delete/{id}', [UserController::class, 'destroy']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

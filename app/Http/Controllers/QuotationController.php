@@ -124,4 +124,17 @@ class QuotationController extends Controller
             'data' => $quotation,
         ], 200);
     }
+
+    public function getUserQuotationsByBusiness($user_id, $business_id)
+    {
+        $quotations = Quotation::where('user_id', $user_id)
+            ->where('business_id', $business_id)
+            ->with('business', 'quotationResponse')
+            ->get();
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $quotations
+        ]);
+    }
 }

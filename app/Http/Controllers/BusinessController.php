@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Business;
 
 use Illuminate\Http\Request;
@@ -79,6 +80,16 @@ class BusinessController extends Controller
     public function searchByLocation($location)
     {
         $businesses = Business::where('business_address', 'like', '%' . $location . '%')->get();
+
+        return response()->json([
+            'status' => 'Success',
+            'data' => $businesses
+        ], 200);
+    }
+
+    public function getAllBusinesses()
+    {
+        $businesses = Business::all();
 
         return response()->json([
             'status' => 'Success',
