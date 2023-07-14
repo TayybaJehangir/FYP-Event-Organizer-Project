@@ -26,7 +26,7 @@ class ProductController extends Controller
                     array_push($childArray, $pid);
                 }   
             }
-            return count(array_values($childArray));
+            return array_values($childArray);
         }
 
         foreach ($mainBrands as $mb) {
@@ -52,7 +52,7 @@ class ProductController extends Controller
             }   
         }
 
-        return count(array_values($childArray));
+        return array_values($childArray);
     }
 
     public function getProductIdsByColor(Request $request)
