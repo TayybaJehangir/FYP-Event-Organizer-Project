@@ -78,6 +78,24 @@ class QuotationController extends Controller
         ]);
     }
 
+    public function getAllQuotations(Request $request)
+    {
+        $quotations = Quotation::with(['business', 'quotationResponse'])
+            ->get();
+
+        $quotations = $quotations->map(function ($quotation) {
+            $quotation->cover_photo = $quotation->business->cover_photo;
+            $quotation->business_name = $quotation->business->business_name;
+            unset($quotation->business);
+            return $quotation;
+        });
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $quotations
+        ]);
+    }
+
 
     public function show($id)
     {
