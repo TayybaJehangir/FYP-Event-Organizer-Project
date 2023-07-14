@@ -7,6 +7,54 @@ use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
+    public function getProductIdsByBrand(Request $request)
+    {
+        $mainBrands = empty($request->query('mainBrands')) ? [] : explode(',', $request->query('mainBrands'));
+        $childBrands = empty($request->query('childBrands')) ? [] : explode(',', $request->query('childBrands'));
+        $childArray = [];
+
+        if (count($childBrands) > 0) {
+            foreach ($childBrands as $cb) {
+                $mapping_results = DB::table('brands_products')->whereRaw('`Brand` LIKE ?', ['%' . $cb . '%'])->get();
+
+                if (empty($mapping_results)) {
+                    return response()->json(['message' => 'No mapping found for the given brand'], 404);
+                }
+
+                foreach ($mapping_results as $result) {
+                    $pid = $result->productIds;
+                    array_push($childArray, $pid);
+                }   
+            }
+            return count(array_values($childArray));
+        }
+
+        foreach ($mainBrands as $mb) {
+            $mapping_results = DB::table('brands_mapping')->whereRaw('`Category` LIKE ?', ['%' . $mb . '%'])->get();
+
+            if (empty($mapping_results)) {
+                return response()->json(['message' => 'No mapping found for the given brand'], 404);
+            }
+
+            foreach ($mapping_results as $result) {
+                $brandName = $result->Brands;
+
+                $mapping_results2 = DB::table('brands_products')->whereRaw('`Brand` LIKE ?', ['%' . $brandName . '%'])->get();
+
+                if (empty($mapping_results2)) {
+                    return response()->json(['message' => 'No mapping found for the given brand'], 404);
+                }
+
+                foreach ($mapping_results2 as $result2) {
+                    $pid = $result2->productIds;
+                    array_push($childArray, $pid);
+                }
+            }   
+        }
+
+        return count(array_values($childArray));
+    }
+
     public function getProductIdsByColor(Request $request)
     {
         $colors = empty($request->query('colors')) ? [] : explode(',', $request->query('colors'));

@@ -63,6 +63,8 @@ Route::get('/managers', [UserController::class, 'getManagers']);
 // Route::get('myplugin/v1/get_product_ids_by_color', 'ProductController@getProductIdsByColor');
 Route::get('myplugin/v1/get_product_ids_by_color', [ProductController::class, 'getProductIdsByColor']);
 
+Route::get('myplugin/v1/get_product_ids_by_brand', [ProductController::class, 'getProductIdsByBrand']);
+
 Route::get('/user/delete/{id}', [UserController::class, 'destroy']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
