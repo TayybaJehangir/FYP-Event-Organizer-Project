@@ -54,6 +54,8 @@ Route::get('/quotation/{id}', [QuotationController::class, 'show']);
 
 Route::post('/quotations/{id}/status', [QuotationController::class, 'updateStatus']);
 
+Route::get('/quotations', [QuotationController::class, 'getAllQuotations']);
+
 Route::get('/stats', [StatsController::class, 'getStats']);
 
 Route::get('/managers', [UserController::class, 'getManagers']);
